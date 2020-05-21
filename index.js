@@ -137,8 +137,35 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
+class Instructor extends Lambdasian {
+  constructor(teacher) {
+    super(teacher);
+    this.specialty = teacher.specialty;
+    this.favLanguage = teacher.favLanguage;
+    this.catchPhrase = teacher.catchPhrase;
+  }
 
+  demo(subject) {
+    return `Today we are learning about ${subject}' where subject is the param passed in.`;
+  }
+
+  grade(student, subject) {
+    return `${student.name} receives a perfect score on ${subject}`;
+  }
+
+  // Stretch
+  updateGrade(student) {
+    let deviation = Math.floor(Math.random() * 11 -5); // Should return values ranging from -5 to +5
+    if((student.grade + deviation) > 100) {
+      student.grade = 100;
+    } else if((student.grade + deviation) < 0) {
+      student.grade = 0;
+    } else {
+      student.grade += deviation;
+    }
+
+    // No return statement requested for this method
+  }
 }
 
 /*
@@ -156,8 +183,47 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
+class Student extends Lambdasian {
+  constructor(paduwan) {
+    super(paduwan);
+    this.previousBackground = paduwan.previousBackground;
+    this.className = paduwan.className;
+    this.favSubjects = paduwan.favSubjects;
 
+    // Stretch
+    this.grade = 94;
+  }
+
+  listSubjects() {
+    let subjectString = "Loving ";
+    for(let i = 0; i < this.favSubjects.length; i++) {
+      subjectString += this.favSubjects[i];
+      if(i === (this.favSubjects.length - 1)) {
+        subjectString += "!";
+      } else {
+        subjectString += ", ";
+      }
+    }
+
+    return subjectString;
+  }
+
+  PRAssignment(subject) {
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+
+  sprintChallenge(subject) {
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+
+  // Stretch
+  graduate() {
+    if(this.grade > 70) {
+      return `With a grade of ${this.grade}%, ${this.name} is ready to graduate from Lambda School!`;
+    } else {
+      return `${this.name} will need to turn in more assignments to bring his/her grade up from ${this.grade}% to graduate.`;
+    }
+  }
 }
 
 /*
@@ -173,8 +239,20 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
+class ProjectManager extends Instructor {
+  constructor(overmind) {
+    super(overmind);
+    this.gradClassName = overmind.gradClassName;
+    this.favInstructor = overmind.favInstructor;
+  }
 
+  standUp(channel) {
+    return `${this.name} announces to ${channel}, @channel standy times!`;
+  }
+
+  debugsCode(student, subject) {
+    return `${this.name} debugs ${student.name}'s code on ${subject}`;
+  }
 }
 
 /*
